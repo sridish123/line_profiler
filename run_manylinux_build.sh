@@ -15,6 +15,7 @@ notes:
     # BETTER TODO: 
     # Use a build stage to build in the multilinux environment and then
     # use a test stage with a different image to test and deploy the wheel
+    uname -m
     docker run --rm -it --entrypoint="" docker:dind sh
     docker run --rm -it --entrypoint="" docker:latest sh
     docker run --rm -v $PWD:/io -it --entrypoint="" docker:latest sh
@@ -22,6 +23,7 @@ notes:
     docker run --rm -v $PWD:/io -it python:2.7 bash
      
         cd /io
+        uname -m
         pip install -r requirements.txt
         pip install pygments
         pip install wheelhouse/pyflann_ibeis-0.5.0-cp27-cp27mu-manylinux2014_aarch64.whl
@@ -32,6 +34,7 @@ notes:
 
         cd /io
         python run_tests.py
+        uname -m
 
 
 MB_PYTHON_TAG=cp38-cp38 ./run_manylinux_build.sh
@@ -89,6 +92,7 @@ if [ "$_INSIDE_DOCKER" != "YES" ]; then
     set +x
     '''
 
+    uname -m
     ls -al wheelhouse
     BDIST_WHEEL_PATH=$(ls wheelhouse/$NAME-$VERSION-$MB_PYTHON_TAG*.whl)
     echo "BDIST_WHEEL_PATH = $BDIST_WHEEL_PATH"

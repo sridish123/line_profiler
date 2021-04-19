@@ -24,7 +24,7 @@ notes:
         cd /io
         pip install -r requirements.txt
         pip install pygments
-        pip install wheelhouse/pyflann_ibeis-0.5.0-cp27-cp27mu-manylinux1_x86_64.whl
+        pip install wheelhouse/pyflann_ibeis-0.5.0-cp27-cp27mu-manylinux2014_aarch64.whl
 
         cd /
         xdoctest pyflann_ibeis
@@ -43,13 +43,13 @@ MB_PYTHON_TAG=cp27-cp27m ./run_manylinux_build.sh
 # MB_PYTHON_TAG=cp27-cp27mu ./run_nmultibuild.sh
 
 docker pull quay.io/erotemic/manylinux-opencv:manylinux1_i686-opencv4.1.0-py3.6
-docker pull quay.io/pypa/manylinux2010_x86_64:latest
+docker pull quay.io/pypa/manylinux2014_aarch64:latest
 
 """
 
 
 #DOCKER_IMAGE=${DOCKER_IMAGE:="quay.io/erotemic/manylinux-for:x86_64-opencv4.1.0-v2"}
-DOCKER_IMAGE=${DOCKER_IMAGE:="quay.io/pypa/manylinux2010_x86_64:latest"}
+DOCKER_IMAGE=${DOCKER_IMAGE:="quay.io/pypa/manylinux2014_aarch64:latest"}
 # Valid multibuild python versions are:
 # cp27-cp27m  cp27-cp27mu  cp34-cp34m  cp35-cp35m  cp36-cp36m  cp37-cp37m, cp38-cp38m
 MB_PYTHON_TAG=${MB_PYTHON_TAG:=$(python -c "import setup; print(setup.native_mb_python_tag())")}

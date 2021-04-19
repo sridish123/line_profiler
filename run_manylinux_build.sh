@@ -118,3 +118,13 @@ else
     chmod -R o+rw wheelhouse
     chmod -R o+rw $NAME.egg-info
 fi
+ls -al
+ls -al wheelhouse
+MB_PYTHON_TAG=$(python -c "import setup; print(setup.MB_PYTHON_TAG)") 
+VERSION=$(python -c "import setup; print(setup.VERSION)") 
+uname -m
+echo "MB_PYTHON_TAG = $MB_PYTHON_TAG"
+echo "VERSION = $VERSION"
+BDIST_WHEEL_PATH=$(ls wheelhouse/*-${VERSION}-${MB_PYTHON_TAG}-*2014_aarch64.whl)
+echo "BDIST_WHEEL_PATH = $BDIST_WHEEL_PATH"
+python -m pip install $BDIST_WHEEL_PATH[all]

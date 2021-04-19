@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-          python-version: [3.6, 3.7, 3.8, 3.9]
+          python-version: [3.8]
 
     steps:
     - uses: actions/checkout@v2
@@ -99,7 +99,7 @@ jobs:
             source .env/bin/activate && \
             python -m pip install --upgrade pip && \
             python -m pip install flake8 pytest && \
-            flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics && \
+            #flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics && \
             ./run_manylinux_build.sh && \
             echo "=====" && \
             ls -al && \

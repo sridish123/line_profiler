@@ -7,7 +7,7 @@ on:
   push:
     branches: [ master, dev/github_actions ]
   #pull_request:
-  #  branches: [ master ]
+  #branches: [ master ]
 
 jobs:
   build:

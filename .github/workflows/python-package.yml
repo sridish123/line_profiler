@@ -28,21 +28,25 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
+        uname -m
         python -m pip install --upgrade pip
         python -m pip install flake8 pytest
         #if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
+        uname -m
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
     #    # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
     #    flake8 . --count --exit-zero --max-complexity=20 --max-line-length=127 --statistics
     - name: Build Wheel
       run: |
+        uname -m
         ./run_manylinux_build.sh
         echo "====="
     - name: Install Wheel
       run: |
+        uname -m
         ls -al
         ls -al wheelhouse
         MB_PYTHON_TAG=$(python -c "import setup; print(setup.MB_PYTHON_TAG)") 
@@ -54,6 +58,7 @@ jobs:
         python -m pip install $BDIST_WHEEL_PATH[all]
     - name: Test Wheel
       run: |
+        uname -m
         python run_tests.py
     
 #__doc__: |

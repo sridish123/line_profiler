@@ -1,50 +1,36 @@
 #!/bin/bash
 __heredoc__="""
-
-
 notes:
-
     Manylinux repo: https://github.com/pypa/manylinux 
-
     Win + Osx repo: https://github.com/mavlink/MAVSDK-Python
-
     # TODO: use dind as the base image,
     # Then run the multibuild in docker followed by a test in a different
     # docker container
-
     # BETTER TODO: 
     # Use a build stage to build in the multilinux environment and then
     # use a test stage with a different image to test and deploy the wheel
     docker run --rm -it --entrypoint="" docker:dind sh
     docker run --rm -it --entrypoint="" docker:latest sh
     docker run --rm -v $PWD:/io -it --entrypoint="" docker:latest sh
-
     docker run --rm -v $PWD:/io -it python:2.7 bash
      
         cd /io
         pip install -r requirements.txt
         pip install pygments
         pip install wheelhouse/pyflann_ibeis-0.5.0-cp27-cp27mu-manylinux2014_aarch64.whl
-
         cd /
         xdoctest pyflann_ibeis
         pytest io/tests
-
         cd /io
         python run_tests.py
-
-
 MB_PYTHON_TAG=cp38-cp38 ./run_manylinux_build.sh
 MB_PYTHON_TAG=cp37-cp37m ./run_manylinux_build.sh
 MB_PYTHON_TAG=cp36-cp36m ./run_manylinux_build.sh
 MB_PYTHON_TAG=cp35-cp35m ./run_manylinux_build.sh
 MB_PYTHON_TAG=cp27-cp27m ./run_manylinux_build.sh
-
 # MB_PYTHON_TAG=cp27-cp27mu ./run_nmultibuild.sh
-
 docker pull quay.io/erotemic/manylinux-opencv:manylinux1_i686-opencv4.1.0-py3.6
 docker pull quay.io/pypa/manylinux2014_aarch64:latest
-
 """
 
 
@@ -84,16 +70,13 @@ if [ "$_INSIDE_DOCKER" != "YES" ]; then
         -e MB_PYTHON_TAG="$MB_PYTHON_TAG" \
         -e WHEEL_NAME_HACK="$WHEEL_NAME_HACK" \
         -it $DOCKER_IMAGE bash
-
     set +e
     set +x
     '''
 
     ls -al wheelhouse
     BDIST_WHEEL_PATH=$(ls wheelhouse/$NAME-$VERSION-$MB_PYTHON_TAG*.whl)
-    uname -m
     echo "BDIST_WHEEL_PATH = $BDIST_WHEEL_PATH"
-    python -m pip install $BDIST_WHEEL_PATH[all]
 else
     set -x
     set -e
@@ -107,8 +90,8 @@ else
 
     source $VENV_DIR/bin/activate 
 
-    cd $REPO_ROOT
     uname -m
+    cd $REPO_ROOT
     pip install -r requirements/build.txt
     python setup.py bdist_wheel
 
@@ -120,4 +103,17 @@ else
     /opt/python/cp37-cp37m/bin/python -m auditwheel repair dist/$NAME-$VERSION-$MB_PYTHON_TAG*.whl
     chmod -R o+rw wheelhouse
     chmod -R o+rw $NAME.egg-info
+    
+    ls -al
+    ls -al wheelhouse
+    MB_PYTHON_TAG=$(python -c "import setup; print(setup.MB_PYTHON_TAG)") 
+    VERSION=$(python -c "import setup; print(setup.VERSION)") 
+    uname -m
+    echo "MB_PYTHON_TAG = $MB_PYTHON_TAG"
+    echo "VERSION = $VERSION"
+    BDIST_WHEEL_PATH=$(ls wheelhouse/*-${VERSION}-${MB_PYTHON_TAG}-*2014_aarch64.whl)
+    echo "BDIST_WHEEL_PATH = $BDIST_WHEEL_PATH"
+    python -m pip install $BDIST_WHEEL_PATH[all]
+    
+    python run_tests.py
 fi

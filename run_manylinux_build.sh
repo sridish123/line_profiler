@@ -108,6 +108,7 @@ else
     source $VENV_DIR/bin/activate 
 
     cd $REPO_ROOT
+    uname -m
     pip install -r requirements/build.txt
     python setup.py bdist_wheel
 

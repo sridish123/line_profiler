@@ -74,6 +74,7 @@ jobs:
     - name: Build and Test Wheel Arm64
       run: |
         uname -m
+        sudo chmod 777 run_manylinux_aarch64_build.sh
         ./run_manylinux_aarch64_build.sh
         echo "====="
 #__doc__: |

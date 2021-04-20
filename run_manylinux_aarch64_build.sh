@@ -90,7 +90,6 @@ else
 
     source $VENV_DIR/bin/activate 
 
-    uname -m
     cd $REPO_ROOT
     pip install -r requirements/build.txt
     python setup.py bdist_wheel
@@ -108,7 +107,6 @@ else
     ls -al wheelhouse
     MB_PYTHON_TAG=$(python -c "import setup; print(setup.MB_PYTHON_TAG)") 
     VERSION=$(python -c "import setup; print(setup.VERSION)") 
-    uname -m
     echo "MB_PYTHON_TAG = $MB_PYTHON_TAG"
     echo "VERSION = $VERSION"
     BDIST_WHEEL_PATH=$(ls wheelhouse/*-${VERSION}-${MB_PYTHON_TAG}-*2014_aarch64.whl)
@@ -116,4 +114,5 @@ else
     python -m pip install $BDIST_WHEEL_PATH[all]
     echo "============ Test Wheel ================"
     python run_tests.py
+    pwd
 fi

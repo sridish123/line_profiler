@@ -17,7 +17,7 @@ notes:
         cd /io
         pip install -r requirements.txt
         pip install pygments
-        pip install wheelhouse/pyflann_ibeis-0.5.0-cp27-cp27mu-manylinux2014_aarch64.whl
+        pip install wheelhouse/pyflann_ibeis-0.5.0-cp27-cp27mu-manylinux1_x86_64.whl
         cd /
         xdoctest pyflann_ibeis
         pytest io/tests
@@ -30,12 +30,12 @@ MB_PYTHON_TAG=cp35-cp35m ./run_manylinux_build.sh
 MB_PYTHON_TAG=cp27-cp27m ./run_manylinux_build.sh
 # MB_PYTHON_TAG=cp27-cp27mu ./run_nmultibuild.sh
 docker pull quay.io/erotemic/manylinux-opencv:manylinux1_i686-opencv4.1.0-py3.6
-docker pull quay.io/pypa/manylinux2014_aarch64:latest
+docker pull quay.io/pypa/manylinux2010_x86_64:latest
 """
 
 
 #DOCKER_IMAGE=${DOCKER_IMAGE:="quay.io/erotemic/manylinux-for:x86_64-opencv4.1.0-v2"}
-DOCKER_IMAGE=${DOCKER_IMAGE:="quay.io/pypa/manylinux2014_aarch64:latest"}
+DOCKER_IMAGE=${DOCKER_IMAGE:="quay.io/pypa/manylinux2010_x86_64:latest"}
 # Valid multibuild python versions are:
 # cp27-cp27m  cp27-cp27mu  cp34-cp34m  cp35-cp35m  cp36-cp36m  cp37-cp37m, cp38-cp38m
 MB_PYTHON_TAG=${MB_PYTHON_TAG:=$(python -c "import setup; print(setup.native_mb_python_tag())")}
@@ -90,7 +90,6 @@ else
 
     source $VENV_DIR/bin/activate 
 
-    uname -m
     cd $REPO_ROOT
     pip install -r requirements/build.txt
     python setup.py bdist_wheel
@@ -103,17 +102,4 @@ else
     /opt/python/cp37-cp37m/bin/python -m auditwheel repair dist/$NAME-$VERSION-$MB_PYTHON_TAG*.whl
     chmod -R o+rw wheelhouse
     chmod -R o+rw $NAME.egg-info
-    
-    ls -al
-    ls -al wheelhouse
-    MB_PYTHON_TAG=$(python -c "import setup; print(setup.MB_PYTHON_TAG)") 
-    VERSION=$(python -c "import setup; print(setup.VERSION)") 
-    uname -m
-    echo "MB_PYTHON_TAG = $MB_PYTHON_TAG"
-    echo "VERSION = $VERSION"
-    BDIST_WHEEL_PATH=$(ls wheelhouse/*-${VERSION}-${MB_PYTHON_TAG}-*2014_aarch64.whl)
-    echo "BDIST_WHEEL_PATH = $BDIST_WHEEL_PATH"
-    python -m pip install $BDIST_WHEEL_PATH[all]
-    
-    python run_tests.py
 fi

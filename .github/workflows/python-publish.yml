@@ -119,7 +119,7 @@ jobs:
       run: |
         uname -m
         sudo chmod 777 run_manylinux_aarch64_build.sh
-        ./run_manylinux_aarch64_build.sh
+        ./run_manylinux_aarch64_build_publish.sh
         echo "====="
 ###
 # Unfortunately we cant (yet) use the yaml docstring trick here

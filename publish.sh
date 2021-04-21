@@ -6,7 +6,6 @@ If your script has binary dependencies then we assume that you have built a
 proper binary wheel with auditwheel and it exists in the wheelhouse directory.
 Otherwise, for source tarballs and universal wheels this script runs the
 setup.py script to create the wheels as well.
-
 Running this script with the default arguments will perform any builds and gpg
 signing, but nothing will be uploaded to pypi unless the user explicitly sets
 DO_UPLOAD=True or answers yes to the prompts.

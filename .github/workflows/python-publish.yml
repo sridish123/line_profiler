@@ -6,7 +6,7 @@ name: Python package
 on:
   push:
     # This will only execute on the release branch
-    branches: [ master ]
+    branches: [ release ]
 
 jobs:
   build:
@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-          python-version: [3.7, 3.8, 3.9]
+          python-version: [3.6, 3.7, 3.8, 3.9]
 
     steps:
     - uses: actions/checkout@v2
@@ -68,9 +68,9 @@ jobs:
         openssl version
         $GPG_EXECUTABLE --list-keys
         export PYUTILS_CI_GITHUB_SECRET=${{ secrets.PYUTILS_CI_GITHUB_SECRET }}
-        GLKWS=$PYUTILS_CI_GITHUB_SECRET openssl enc -aes-256-cbc -pbkdf2 -md SHA512  -pass env:GLKWS -d -a -in dev/cci_public_gpg_key.pgp.enc | $GPG_EXECUTABLE --import 
-        GLKWS=$PYUTILS_CI_GITHUB_SECRET openssl enc -aes-256-cbc -pbkdf2 -md SHA512  -pass env:GLKWS -d -a -in dev/cci_gpg_owner_trust.enc | $GPG_EXECUTABLE --import-ownertrust
-        GLKWS=$PYUTILS_CI_GITHUB_SECRET openssl enc -aes-256-cbc -pbkdf2 -md SHA512  -pass env:GLKWS -d -a -in dev/cci_secret_gpg_key.pgp.enc | $GPG_EXECUTABLE --import 
+        GLKWS=$PYUTILS_CI_GITHUB_SECRET openssl enc -aes-256-cbc -pbkdf2 -md SHA512 -pass env:GLKWS -d -a -in dev/cci_public_gpg_key.pgp.enc | $GPG_EXECUTABLE --import 
+        GLKWS=$PYUTILS_CI_GITHUB_SECRET openssl enc -aes-256-cbc -pbkdf2 -md SHA512 -pass env:GLKWS -d -a -in dev/cci_gpg_owner_trust.enc | $GPG_EXECUTABLE --import-ownertrust
+        GLKWS=$PYUTILS_CI_GITHUB_SECRET openssl enc -aes-256-cbc -pbkdf2 -md SHA512 -pass env:GLKWS -d -a -in dev/cci_secret_gpg_key.pgp.enc | $GPG_EXECUTABLE --import 
         $GPG_EXECUTABLE --list-keys  || echo "first one fails for some reason"
         $GPG_EXECUTABLE --list-keys  
         MB_PYTHON_TAG=$(python -c "import setup; print(setup.MB_PYTHON_TAG)")

@@ -62,10 +62,7 @@ jobs:
         PYUTILS_TEST_TWINE_USERNAME: ${{ secrets.PYUTILS_TEST_TWINE_USERNAME }}
         PYUTILS_TEST_TWINE_PASSWORD: ${{ secrets.PYUTILS_TEST_TWINE_PASSWORD }}
       run: |
-        #sudo apt-get update
-        #sudo apt-get install ca-certificates
         gpg --import KEYS
-        sudo apt-get update
         ls -al
         GPG_EXECUTABLE=gpg
         $GPG_EXECUTABLE --version

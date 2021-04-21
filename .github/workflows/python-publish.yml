@@ -6,7 +6,7 @@ name: Python package
 on:
   push:
     # This will only execute on the release branch
-    branches: [ release ]
+    branches: [ master ]
 
 jobs:
   build:

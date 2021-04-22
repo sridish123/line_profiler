@@ -85,6 +85,7 @@ else
 
     # Setup a virtual environment for the target python version
     /opt/python/$MB_PYTHON_TAG/bin/python -m pip install pip
+    /opt/python/$MB_PYTHON_TAG/bin/python -m pip install setuptools pip virtualenv scikit-build cmake ninja ubelt wheel
     /opt/python/$MB_PYTHON_TAG/bin/python -m virtualenv $VENV_DIR
 
     source $VENV_DIR/bin/activate 

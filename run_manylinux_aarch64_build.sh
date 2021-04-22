@@ -102,7 +102,7 @@ else
     /opt/python/cp37-cp37m/bin/python -m auditwheel repair dist/$NAME-$VERSION-$MB_PYTHON_TAG*.whl
     chmod -R o+rw wheelhouse
     chmod -R o+rw $NAME.egg-info
-    echo "============ Install Wheel ================"
+    echo "================================================ Install Wheel ===================================================="
     ls -al
     ls -al wheelhouse
     MB_PYTHON_TAG=$(python -c "import setup; print(setup.MB_PYTHON_TAG)") 
@@ -112,7 +112,6 @@ else
     BDIST_WHEEL_PATH=$(ls wheelhouse/*-${VERSION}-${MB_PYTHON_TAG}-*2014_aarch64.whl)
     echo "BDIST_WHEEL_PATH = $BDIST_WHEEL_PATH"
     python -m pip install $BDIST_WHEEL_PATH[all]
-    echo "============ Test Wheel ================"
+    echo "================================================ Test Wheel ===================================================="
     python run_tests.py
-    pwd
 fi

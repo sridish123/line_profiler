@@ -23,13 +23,12 @@ notes:
         pytest io/tests
         cd /io
         python run_tests.py
-MB_PYTHON_TAG=cp38-cp38 ./run_manylinux_aarch64_build.sh
-MB_PYTHON_TAG=cp37-cp37m ./run_manylinux_aarch64_build.sh
-MB_PYTHON_TAG=cp36-cp36m ./run_manylinux_aarch64_build.sh
-MB_PYTHON_TAG=cp35-cp35m ./run_manylinux_aarch64_build.sh
-MB_PYTHON_TAG=cp27-cp27m ./run_manylinux_aarch64_build.sh
+#MB_PYTHON_TAG=cp38-cp38 ./run_manylinux_aarch64_build.sh
+#MB_PYTHON_TAG=cp37-cp37m ./run_manylinux_aarch64_build.sh
+#MB_PYTHON_TAG=cp36-cp36m ./run_manylinux_aarch64_build.sh
+#MB_PYTHON_TAG=cp35-cp35m ./run_manylinux_aarch64_build.sh
+#MB_PYTHON_TAG=cp27-cp27m ./run_manylinux_aarch64_build.sh
 # MB_PYTHON_TAG=cp27-cp27mu ./run_nmultibuild.sh
-docker pull quay.io/erotemic/manylinux-opencv:manylinux1_i686-opencv4.1.0-py3.6
 docker pull quay.io/pypa/manylinux2014_aarch64:latest
 """
 
@@ -43,7 +42,7 @@ NAME=${NAME:=$(python -c "import setup; print(setup.NAME)")}
 VERSION=${VERSION:=$(python -c "import setup; print(setup.VERSION)")}
 REPO_ROOT=${REPO_ROOT:=/io}
 echo "
-MB_PYTHON_TAG = $MB_PYTHON_TAG
+MB_PYTHON_TAG = $1
 DOCKER_IMAGE = $DOCKER_IMAGE
 VERSION = $VERSION
 NAME = $NAME

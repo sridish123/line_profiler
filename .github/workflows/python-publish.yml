@@ -36,7 +36,7 @@ jobs:
     #    flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Build Wheel
       run: |
-        sudo chmod 777 run_manylinux_aarch64_build_publish.sh
+        sudo chmod 777 run_manylinux_aarch64_build.sh
         ./run_manylinux_aarch64_build.sh
         echo "====="
     - name: Install Wheel

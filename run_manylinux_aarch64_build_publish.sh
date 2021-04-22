@@ -89,31 +89,6 @@ else
     /opt/python/$MB_PYTHON_TAG/bin/python -m virtualenv $VENV_DIR
 
     source $VENV_DIR/bin/activate 
-
-    cd $REPO_ROOT
-    pip install -r requirements/build.txt
-    python setup.py bdist_wheel
-
-    chmod -R o+rw _skbuild
-    chmod -R o+rw dist
-
-    /opt/python/cp37-cp37m/bin/python -m pip install auditwheel
-    /opt/python/cp37-cp37m/bin/python -m auditwheel show dist/$NAME-$VERSION-$MB_PYTHON_TAG*.whl
-    /opt/python/cp37-cp37m/bin/python -m auditwheel repair dist/$NAME-$VERSION-$MB_PYTHON_TAG*.whl
-    chmod -R o+rw wheelhouse
-    chmod -R o+rw $NAME.egg-info
-    echo "============================================ Install Wheel ================================================"
-    ls -al
-    ls -al wheelhouse
-    MB_PYTHON_TAG=$(python -c "import setup; print(setup.MB_PYTHON_TAG)") 
-    VERSION=$(python -c "import setup; print(setup.VERSION)") 
-    echo "MB_PYTHON_TAG = $MB_PYTHON_TAG"
-    echo "VERSION = $VERSION"
-    BDIST_WHEEL_PATH=$(ls wheelhouse/*-${VERSION}-${MB_PYTHON_TAG}-*2014_aarch64.whl)
-    echo "BDIST_WHEEL_PATH = $BDIST_WHEEL_PATH"
-    python -m pip install $BDIST_WHEEL_PATH[all]
-    echo "============================================ Test Wheel ================================================"
-    python run_tests.py
     echo "============================================ Sign and Publish ================================================"
     ls -al
     GPG_EXECUTABLE=gpg

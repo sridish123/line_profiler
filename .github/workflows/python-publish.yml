@@ -121,6 +121,7 @@ jobs:
       run: |
         sudo chmod 777 run_manylinux_aarch64_build_publish.sh
         sudo chmod 777 run_manylinux_aarch64_build.sh
+        ./run_manylinux_aarch64_build.sh
         ./run_manylinux_aarch64_build_publish.sh
         echo "====="
         

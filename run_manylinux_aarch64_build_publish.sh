@@ -23,11 +23,11 @@ notes:
         pytest io/tests
         cd /io
         python run_tests.py
-MB_PYTHON_TAG=cp38-cp38 ./run_manylinux_build.sh
-MB_PYTHON_TAG=cp37-cp37m ./run_manylinux_build.sh
-MB_PYTHON_TAG=cp36-cp36m ./run_manylinux_build.sh
-MB_PYTHON_TAG=cp35-cp35m ./run_manylinux_build.sh
-MB_PYTHON_TAG=cp27-cp27m ./run_manylinux_build.sh
+MB_PYTHON_TAG=cp38-cp38 ./run_manylinux_aarch64_build_publish.sh
+MB_PYTHON_TAG=cp37-cp37m ./run_manylinux_aarch64_build_publish.sh
+MB_PYTHON_TAG=cp36-cp36m ./run_manylinux_aarch64_build_publish.sh
+MB_PYTHON_TAG=cp35-cp35m ./run_manylinux_aarch64_build_publish.sh
+MB_PYTHON_TAG=cp27-cp27m ./run_manylinux_aarch64_build_publish.sh
 # MB_PYTHON_TAG=cp27-cp27mu ./run_nmultibuild.sh
 docker pull quay.io/erotemic/manylinux-opencv:manylinux1_i686-opencv4.1.0-py3.6
 docker pull quay.io/pypa/manylinux2014_aarch64:latest

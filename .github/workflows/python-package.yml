@@ -69,7 +69,7 @@ jobs:
       run: |
         uname -m
         sudo chmod 777 run_manylinux_aarch64_build.sh
-        ./run_manylinux_aarch64_build.sh
+        ./run_manylinux_aarch64_build.sh ${{ matrix.python-version }}
         echo "====="
 #__doc__: |
 #    # How to run locally

@@ -12,7 +12,7 @@ notes:
     docker run --rm -it --entrypoint="" docker:dind sh
     docker run --rm -it --entrypoint="" docker:latest sh
     docker run --rm -v $PWD:/io -it --entrypoint="" docker:latest sh
-    docker run --rm -v $PWD:/io -it python:2.7 bash
+    #docker run --rm -v $PWD:/io -it python:2.7 bash
      
         cd /io
         pip install -r requirements.txt
@@ -23,12 +23,6 @@ notes:
         pytest io/tests
         cd /io
         python run_tests.py
-#MB_PYTHON_TAG=cp38-cp38 ./run_manylinux_aarch64_build.sh
-#MB_PYTHON_TAG=cp37-cp37m ./run_manylinux_aarch64_build.sh
-#MB_PYTHON_TAG=cp36-cp36m ./run_manylinux_aarch64_build.sh
-#MB_PYTHON_TAG=cp35-cp35m ./run_manylinux_aarch64_build.sh
-#MB_PYTHON_TAG=cp27-cp27m ./run_manylinux_aarch64_build.sh
-# MB_PYTHON_TAG=cp27-cp27mu ./run_nmultibuild.sh
 docker pull quay.io/pypa/manylinux2014_aarch64:latest
 """
 

@@ -3,38 +3,9 @@ __heredoc__="""
 notes:
     Manylinux repo: https://github.com/pypa/manylinux 
     Win + Osx repo: https://github.com/mavlink/MAVSDK-Python
-    # TODO: use dind as the base image,
-    # Then run the multibuild in docker followed by a test in a different
-    # docker container
-    # BETTER TODO: 
-    # Use a build stage to build in the multilinux environment and then
-    # use a test stage with a different image to test and deploy the wheel
-    docker run --rm -it --entrypoint="" docker:dind sh
-    docker run --rm -it --entrypoint="" docker:latest sh
-    docker run --rm -v $PWD:/io -it --entrypoint="" docker:latest sh
-    docker run --rm -v $PWD:/io -it python:2.7 bash
-     
-        cd /io
-        pip install -r requirements.txt
-        pip install pygments
-        pip install wheelhouse/pyflann_ibeis-0.5.0-cp27-cp27mu-manylinux2014_aarch64.whl
-        cd /
-        xdoctest pyflann_ibeis
-        pytest io/tests
-        cd /io
-        python run_tests.py
-MB_PYTHON_TAG=cp38-cp38 ./run_manylinux_aarch64_build_publish.sh
-MB_PYTHON_TAG=cp37-cp37m ./run_manylinux_aarch64_build_publish.sh
-MB_PYTHON_TAG=cp36-cp36m ./run_manylinux_aarch64_build_publish.sh
-MB_PYTHON_TAG=cp35-cp35m ./run_manylinux_aarch64_build_publish.sh
-MB_PYTHON_TAG=cp27-cp27m ./run_manylinux_aarch64_build_publish.sh
-# MB_PYTHON_TAG=cp27-cp27mu ./run_nmultibuild.sh
-docker pull quay.io/erotemic/manylinux-opencv:manylinux1_i686-opencv4.1.0-py3.6
-docker pull quay.io/pypa/manylinux2014_aarch64:latest
 """
 
 
-#DOCKER_IMAGE=${DOCKER_IMAGE:="quay.io/erotemic/manylinux-for:x86_64-opencv4.1.0-v2"}
 DOCKER_IMAGE=${DOCKER_IMAGE:="quay.io/pypa/manylinux2014_aarch64:latest"}
 # Valid multibuild python versions are:
 # cp27-cp27m  cp27-cp27mu  cp34-cp34m  cp35-cp35m  cp36-cp36m  cp37-cp37m, cp38-cp38m
@@ -43,7 +14,6 @@ NAME=${NAME:=$(python -c "import setup; print(setup.NAME)")}
 VERSION=${VERSION:=$(python -c "import setup; print(setup.VERSION)")}
 REPO_ROOT=${REPO_ROOT:=/io}
 echo "
-MB_PYTHON_TAG = $MB_PYTHON_TAG
 DOCKER_IMAGE = $DOCKER_IMAGE
 VERSION = $VERSION
 NAME = $NAME

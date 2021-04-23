@@ -42,7 +42,7 @@ NAME=${NAME:=$(python -c "import setup; print(setup.NAME)")}
 VERSION=${VERSION:=$(python -c "import setup; print(setup.VERSION)")}
 REPO_ROOT=${REPO_ROOT:=/io}
 echo "
-MB_PYTHON_TAG = $1
+#MB_PYTHON_TAG = $1
 DOCKER_IMAGE = $DOCKER_IMAGE
 VERSION = $VERSION
 NAME = $NAME

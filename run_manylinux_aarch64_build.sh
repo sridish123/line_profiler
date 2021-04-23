@@ -12,17 +12,16 @@ notes:
     docker run --rm -it --entrypoint="" docker:dind sh
     docker run --rm -it --entrypoint="" docker:latest sh
     docker run --rm -v $PWD:/io -it --entrypoint="" docker:latest sh
-    #docker run --rm -v $PWD:/io -it python:2.7 bash
      
-        cd /io
-        pip install -r requirements.txt
-        pip install pygments
-        pip install wheelhouse/pyflann_ibeis-0.5.0-cp27-cp27mu-manylinux2014_aarch64.whl
-        cd /
-        xdoctest pyflann_ibeis
-        pytest io/tests
-        cd /io
-        python run_tests.py
+ #       cd /io
+  #      pip install -r requirements.txt
+   #     pip install pygments
+    #    pip install wheelhouse/pyflann_ibeis-0.5.0-cp27-cp27mu-manylinux2014_aarch64.whl
+     #   cd /
+      #  xdoctest pyflann_ibeis
+       # pytest io/tests
+        #cd /io
+        #python run_tests.py
 docker pull quay.io/pypa/manylinux2014_aarch64:latest
 """
 

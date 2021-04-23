@@ -71,7 +71,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Build and Test Wheel Arm64
       run: |
-        sudo chmod 777 run_manylinux_aarch64_build.sh
+        sudo chmod +x run_manylinux_aarch64_build.sh
         ./run_manylinux_aarch64_build.sh
         echo "====="
 #__doc__: |

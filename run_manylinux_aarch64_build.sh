@@ -3,30 +3,9 @@ __heredoc__="""
 notes:
     Manylinux repo: https://github.com/pypa/manylinux 
     Win + Osx repo: https://github.com/mavlink/MAVSDK-Python
-    # TODO: use dind as the base image,
-    # Then run the multibuild in docker followed by a test in a different
-    # docker container
-    # BETTER TODO: 
-    # Use a build stage to build in the multilinux environment and then
-    # use a test stage with a different image to test and deploy the wheel
-    docker run --rm -it --entrypoint="" docker:dind sh
-    docker run --rm -it --entrypoint="" docker:latest sh
-    docker run --rm -v $PWD:/io -it --entrypoint="" docker:latest sh
-     
- #       cd /io
-  #      pip install -r requirements.txt
-   #     pip install pygments
-    #    pip install wheelhouse/pyflann_ibeis-0.5.0-cp27-cp27mu-manylinux2014_aarch64.whl
-     #   cd /
-      #  xdoctest pyflann_ibeis
-       # pytest io/tests
-        #cd /io
-        #python run_tests.py
-docker pull quay.io/pypa/manylinux2014_aarch64:latest
 """
 
 
-#DOCKER_IMAGE=${DOCKER_IMAGE:="quay.io/erotemic/manylinux-for:x86_64-opencv4.1.0-v2"}
 DOCKER_IMAGE=${DOCKER_IMAGE:="quay.io/pypa/manylinux2014_aarch64:latest"}
 # Valid multibuild python versions are:
 # cp27-cp27m  cp27-cp27mu  cp34-cp34m  cp35-cp35m  cp36-cp36m  cp37-cp37m, cp38-cp38m
@@ -94,6 +73,7 @@ else
     /opt/python/cp37-cp37m/bin/python -m auditwheel repair dist/$NAME-$VERSION-$MB_PYTHON_TAG*.whl
     chmod -R o+rw wheelhouse
     chmod -R o+rw $NAME.egg-info
+    #Install Wheel
     echo "================================================ Install Wheel ===================================================="
     ls -al
     ls -al wheelhouse
@@ -104,6 +84,7 @@ else
     BDIST_WHEEL_PATH=$(ls wheelhouse/*-${VERSION}-${MB_PYTHON_TAG}-*2014_aarch64.whl)
     echo "BDIST_WHEEL_PATH = $BDIST_WHEEL_PATH"
     python -m pip install $BDIST_WHEEL_PATH[all]
+    #Test Wheel
     echo "================================================ Test Wheel ===================================================="
     python run_tests.py
 fi

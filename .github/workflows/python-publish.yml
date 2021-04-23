@@ -109,17 +109,21 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-          python-version: [cp36-cp36m, cp37-cp37m, cp38-cp38, cp39-cp39]
+          python-version: [3.6, 3.7, 3.8, 3.9]
 
     steps:
     - uses: actions/checkout@v2
     - name: Set up QEMU
       id: qemu
       uses: docker/setup-qemu-action@v1  
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
     - name: Build and Test Wheel Arm64
       run: |
         sudo chmod 777 run_manylinux_aarch64_build.sh
-        ./run_manylinux_aarch64_build.sh
+        ./run_manylinux_aarch64_build.sh ${{ matrix.python-version }}
         echo "====="
     - name: Sign and Publish Arm64
       run: |

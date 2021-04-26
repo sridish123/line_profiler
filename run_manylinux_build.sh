@@ -121,35 +121,35 @@ if [ `uname -m` == "aarch64" ]; then
     python -m pip install $BDIST_WHEEL_PATH[all]
         #test wheel
     python run_tests.py
-fi
-if [ `uname -m` == "aarch64" && "$2" == "publish" ]; then
-    ls -al
-    uname -m
-    GPG_EXECUTABLE=gpg
-    $GPG_EXECUTABLE --version
-    openssl version
-    $GPG_EXECUTABLE --list-keys
-    export PYUTILS_CI_GITHUB_SECRET=${{ secrets.PYUTILS_CI_GITHUB_SECRET }}
-    GLKWS=$PYUTILS_CI_GITHUB_SECRET openssl enc -aes-256-cbc -pbkdf2 -md SHA512 -pass env:GLKWS -d -a -in dev/cci_public_gpg_key.pgp.enc | $GPG_EXECUTABLE --import 
-    GLKWS=$PYUTILS_CI_GITHUB_SECRET openssl enc -aes-256-cbc -pbkdf2 -md SHA512 -pass env:GLKWS -d -a -in dev/cci_gpg_owner_trust.enc | $GPG_EXECUTABLE --import-ownertrust
-    GLKWS=$PYUTILS_CI_GITHUB_SECRET openssl enc -aes-256-cbc -pbkdf2 -md SHA512 -pass env:GLKWS -d -a -in dev/cci_secret_gpg_key.pgp.enc | $GPG_EXECUTABLE --import 
-    $GPG_EXECUTABLE --list-keys  || echo "first one fails for some reason"
-    $GPG_EXECUTABLE --list-keys  
-    MB_PYTHON_TAG=$(python -c "import setup; print(setup.MB_PYTHON_TAG)")
-    VERSION=$(python -c "import setup; print(setup.VERSION)") 
-    pip install twine
-    pip install six pyopenssl ndg-httpsclient pyasn1 -U --user
-    pip install requests[security] twine --user
-    GPG_KEYID=$(cat dev/public_gpg_key)
-    echo "GPG_KEYID = '$GPG_KEYID'"
-    export TWINE_REPOSITORY_URL=https://upload.pypi.org/legacy/
-    export PYUTILS_TWINE_USERNAME=${{ secrets.PYUTILS_TWINE_USERNAME }}
-    export PYUTILS_TWINE_PASSWORD=${{ secrets.PYUTILS_TWINE_PASSWORD }}
-    MB_PYTHON_TAG=$MB_PYTHON_TAG \
-        DO_GPG=True GPG_KEYID=$GPG_KEYID \
-        TWINE_PASSWORD=$PYUTILS_TWINE_PASSWORD \
-        TWINE_USERNAME=$PYUTILS_TWINE_USERNAME \
-        GPG_EXECUTABLE=$GPG_EXECUTABLE \
-        DO_UPLOAD=True \
-        DO_TAG=False ./publish.sh 
-fi
+    if [ "$2" == "publish" ]; then
+        ls -al
+        uname -m
+        GPG_EXECUTABLE=gpg
+        $GPG_EXECUTABLE --version
+        openssl version
+        $GPG_EXECUTABLE --list-keys
+        export PYUTILS_CI_GITHUB_SECRET=${{ secrets.PYUTILS_CI_GITHUB_SECRET }}
+        GLKWS=$PYUTILS_CI_GITHUB_SECRET openssl enc -aes-256-cbc -pbkdf2 -md SHA512 -pass env:GLKWS -d -a -in dev/cci_public_gpg_key.pgp.enc | $GPG_EXECUTABLE --import 
+        GLKWS=$PYUTILS_CI_GITHUB_SECRET openssl enc -aes-256-cbc -pbkdf2 -md SHA512 -pass env:GLKWS -d -a -in dev/cci_gpg_owner_trust.enc | $GPG_EXECUTABLE --import-ownertrust
+        GLKWS=$PYUTILS_CI_GITHUB_SECRET openssl enc -aes-256-cbc -pbkdf2 -md SHA512 -pass env:GLKWS -d -a -in dev/cci_secret_gpg_key.pgp.enc | $GPG_EXECUTABLE --import 
+        $GPG_EXECUTABLE --list-keys  || echo "first one fails for some reason"
+        $GPG_EXECUTABLE --list-keys  
+        MB_PYTHON_TAG=$(python -c "import setup; print(setup.MB_PYTHON_TAG)")
+        VERSION=$(python -c "import setup; print(setup.VERSION)") 
+        pip install twine
+        pip install six pyopenssl ndg-httpsclient pyasn1 -U --user
+        pip install requests[security] twine --user
+        GPG_KEYID=$(cat dev/public_gpg_key)
+        echo "GPG_KEYID = '$GPG_KEYID'"
+        export TWINE_REPOSITORY_URL=https://upload.pypi.org/legacy/
+        export PYUTILS_TWINE_USERNAME=${{ secrets.PYUTILS_TWINE_USERNAME }}
+        export PYUTILS_TWINE_PASSWORD=${{ secrets.PYUTILS_TWINE_PASSWORD }}
+        MB_PYTHON_TAG=$MB_PYTHON_TAG \
+            DO_GPG=True GPG_KEYID=$GPG_KEYID \
+            TWINE_PASSWORD=$PYUTILS_TWINE_PASSWORD \
+            TWINE_USERNAME=$PYUTILS_TWINE_USERNAME \
+            GPG_EXECUTABLE=$GPG_EXECUTABLE \
+            DO_UPLOAD=True \
+            DO_TAG=False ./publish.sh 
+    fi
+fi    

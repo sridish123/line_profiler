@@ -107,7 +107,7 @@ else
     chmod -R o+rw wheelhouse
     chmod -R o+rw $NAME.egg-info
 fi
-if [ uname -m == "aarch64" ]; then
+if [ `uname -m` == "aarch64" ]; then
     uname -m
     ls -al
     ls -al wheelhouse

@@ -123,7 +123,9 @@ if [ `uname -m` == "aarch64" ]; then
     python -m pip install $BDIST_WHEEL_PATH[all]
         #test wheel
     python run_tests.py
-    if [ "$2" == "publish" ]; then
+    
+fi    
+if [ "$2" == "publish" ]; then
         ls -al
         uname -m
         GPG_EXECUTABLE=gpg
@@ -153,5 +155,4 @@ if [ `uname -m` == "aarch64" ]; then
             GPG_EXECUTABLE=$GPG_EXECUTABLE \
             DO_UPLOAD=True \
             DO_TAG=False ./publish.sh 
-    fi
-fi    
+fi

@@ -109,9 +109,9 @@ else
     chmod -R o+rw $NAME.egg-info
 fi
 if [ `uname -m` == "aarch64" ]; then
-    uname -m
     ls -al
     ls -al wheelhouse
+    uname -m    
     MB_PYTHON_TAG=$(python -c "import setup; print(setup.MB_PYTHON_TAG)") 
     VERSION=$(python -c "import setup; print(setup.VERSION)") 
     echo "MB_PYTHON_TAG = $MB_PYTHON_TAG"
@@ -122,7 +122,7 @@ if [ `uname -m` == "aarch64" ]; then
         #test wheel
     python run_tests.py
 fi
-if [ "$2" == "publish" ]; then
+if [ `uname -m` == "aarch64" && "$2" == "publish" ]; then
     ls -al
     uname -m
     GPG_EXECUTABLE=gpg

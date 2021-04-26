@@ -122,14 +122,9 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Build and Test Wheel Arm64
       run: |
-        sudo chmod +x run_manylinux_aarch64_build.sh
-        ./run_manylinux_aarch64_build.sh
+        ./run_manylinux_build.sh aarch64 publish
         echo "====="
-    - name: Sign and Publish Arm64
-      run: |
-        sudo chmod +x run_manylinux_aarch64_build_publish.sh    
-        ./run_manylinux_aarch64_build_publish.sh
-
+    
 ###
 # Unfortunately we cant (yet) use the yaml docstring trick here
 # https://github.community/t/allow-unused-keys-in-workflow-yaml-files/172120

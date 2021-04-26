@@ -33,10 +33,10 @@ docker pull quay.io/erotemic/manylinux-opencv:manylinux1_i686-opencv4.1.0-py3.6
 docker pull quay.io/pypa/manylinux2010_x86_64:latest
 """
 
-arch= "$1"
-cmd= "$2"
-echo "arch: $arch"
-echo "command: $cmd"
+#arch= "$1"
+#cmd= "$2"
+echo "arch: $1"
+echo "command: $2"
 #DOCKER_IMAGE=${DOCKER_IMAGE:="quay.io/erotemic/manylinux-for:x86_64-opencv4.1.0-v2"}
 if [ "$1" == "x86_64" ]; then
     DOCKER_IMAGE=${DOCKER_IMAGE:="quay.io/pypa/manylinux2010_x86_64:latest"}

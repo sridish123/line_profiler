@@ -36,7 +36,7 @@ docker pull quay.io/pypa/manylinux2010_x86_64:latest
 arch= "$1"
 echo "arch: $1"
 #DOCKER_IMAGE=${DOCKER_IMAGE:="quay.io/erotemic/manylinux-for:x86_64-opencv4.1.0-v2"}
-if [ "$1" == "x86_64" ]; then
+if [ "arch" == "x86_64" ]; then
     DOCKER_IMAGE=${DOCKER_IMAGE:="quay.io/pypa/manylinux2010_x86_64:latest"}
 else
     DOCKER_IMAGE=${DOCKER_IMAGE:="quay.io/pypa/manylinux2014_aarch64:latest"}

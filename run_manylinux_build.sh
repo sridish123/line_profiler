@@ -58,7 +58,6 @@ MB_PYTHON_TAG = $MB_PYTHON_TAG
 DOCKER_IMAGE = $DOCKER_IMAGE
 VERSION = $VERSION
 NAME = $NAME
-COMMAND = $COMMAND
 "
 
 if [ "$_INSIDE_DOCKER" != "YES" ]; then
@@ -68,7 +67,7 @@ if [ "$_INSIDE_DOCKER" != "YES" ]; then
         -v $PWD:/io \
         -e _INSIDE_DOCKER="YES" \
         -e NAME="$NAME" \
-        -e COMMAND="$COMMAND" \
+        -e COMMAND="$cmd" \
         -e VERSION="$VERSION" \
         -e MB_PYTHON_TAG="$MB_PYTHON_TAG" \
         -e WHEEL_NAME_HACK="$WHEEL_NAME_HACK" \

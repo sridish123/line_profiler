@@ -36,6 +36,7 @@ docker pull quay.io/pypa/manylinux2010_x86_64:latest
 #arch= "$1"
 cmd="$2"
 echo "$cmd"
+echo $cmd
 echo "arch: $1"
 echo "command: $2"
 #DOCKER_IMAGE=${DOCKER_IMAGE:="quay.io/erotemic/manylinux-for:x86_64-opencv4.1.0-v2"}
@@ -50,7 +51,9 @@ MB_PYTHON_TAG=${MB_PYTHON_TAG:=$(python -c "import setup; print(setup.native_mb_
 NAME=${NAME:=$(python -c "import setup; print(setup.NAME)")}
 VERSION=${VERSION:=$(python -c "import setup; print(setup.VERSION)")}
 REPO_ROOT=${REPO_ROOT:=/io}
-COMMAND = $cmd
+COMMAND = $2
+echo "########################## commnad#################################"
+echo $COMMAND
 echo "
 MB_PYTHON_TAG = $MB_PYTHON_TAG
 DOCKER_IMAGE = $DOCKER_IMAGE

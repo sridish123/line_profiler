@@ -51,7 +51,7 @@ NAME=${NAME:=$(python -c "import setup; print(setup.NAME)")}
 VERSION=${VERSION:=$(python -c "import setup; print(setup.VERSION)")}
 REPO_ROOT=${REPO_ROOT:=/io}
 COMMAND=$cmd
-echo "########################## commnad #################################"
+echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@commnad outside @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 echo "$COMMAND"
 echo "
 MB_PYTHON_TAG = $MB_PYTHON_TAG

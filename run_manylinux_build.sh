@@ -35,8 +35,8 @@ docker pull quay.io/pypa/manylinux2010_x86_64:latest
 
 arch="$1"
 cmd="$2"
-ARCH = $arch
-COMMAND = $cmd
+ARCH="$arch"
+COMMAND="$cmd"
 
 echo "arch: $ARCH"
 echo "command: $COMMAND"

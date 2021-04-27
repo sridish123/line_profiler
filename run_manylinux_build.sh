@@ -154,6 +154,4 @@ if [ `uname -m` == "aarch64" ]; then
             DO_UPLOAD=True \
             DO_TAG=False ./publish.sh 
     fi
-fi
-
-fi    
+fi 

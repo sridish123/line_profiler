@@ -34,7 +34,7 @@ docker pull quay.io/pypa/manylinux2010_x86_64:latest
 """
 
 #arch= "$1"
-cmd = "$2"
+cmd="$2"
 echo "$cmd"
 echo "arch: $1"
 echo "command: $2"

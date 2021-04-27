@@ -34,9 +34,9 @@ docker pull quay.io/pypa/manylinux2010_x86_64:latest
 """
 
 #arch= "$1"
-cmd= "$2"
+#cmd= "$2"
 echo "arch: $1"
-echo "command: $cmd"
+echo "command: $2"
 #DOCKER_IMAGE=${DOCKER_IMAGE:="quay.io/erotemic/manylinux-for:x86_64-opencv4.1.0-v2"}
 if [ "$1" == "x86_64" ]; then
     DOCKER_IMAGE=${DOCKER_IMAGE:="quay.io/pypa/manylinux2010_x86_64:latest"}
@@ -123,7 +123,7 @@ if [ `uname -m` == "aarch64" ]; then
     python -m pip install $BDIST_WHEEL_PATH[all]
         #test wheel
     python run_tests.py
-    if [ "$cmd" == "publish" ]; then
+    if [ "$2" == "publish" ]; then
         ls -al
         uname -m
         GPG_EXECUTABLE=gpg

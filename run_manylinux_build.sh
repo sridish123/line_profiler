@@ -92,6 +92,12 @@ if [ "$_INSIDE_DOCKER" != "YES" ]; then
 else
     set -x
     set -e
+    
+    echo "####################### Command #########################################"
+    echo "COMMAND: $COMMAND"
+    echo "cmd: $cmd"
+    echo "aarch: $arch"
+    
 
     VENV_DIR=/root/venv-$MB_PYTHON_TAG
 

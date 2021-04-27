@@ -33,13 +33,15 @@ docker pull quay.io/erotemic/manylinux-opencv:manylinux1_i686-opencv4.1.0-py3.6
 docker pull quay.io/pypa/manylinux2010_x86_64:latest
 """
 
-#arch= "$1"
+arch="$1"
 cmd="$2"
-echo $cmd
-echo "arch: $1"
-echo "command: $cmd"
+ARCH = $arch
+COMMAND = $cmd
+
+echo "arch: $ARCH"
+echo "command: $COMMAND"
 #DOCKER_IMAGE=${DOCKER_IMAGE:="quay.io/erotemic/manylinux-for:x86_64-opencv4.1.0-v2"}
-if [ "$1" == "x86_64" ]; then
+if [ "$ARCH" == "x86_64" ]; then
     DOCKER_IMAGE=${DOCKER_IMAGE:="quay.io/pypa/manylinux2010_x86_64:latest"}
 else
     DOCKER_IMAGE=${DOCKER_IMAGE:="quay.io/pypa/manylinux2014_aarch64:latest"}
@@ -50,14 +52,15 @@ MB_PYTHON_TAG=${MB_PYTHON_TAG:=$(python -c "import setup; print(setup.native_mb_
 NAME=${NAME:=$(python -c "import setup; print(setup.NAME)")}
 VERSION=${VERSION:=$(python -c "import setup; print(setup.VERSION)")}
 REPO_ROOT=${REPO_ROOT:=/io}
-COMMAND=$cmd
+PUBLISH_COMMAND=$COMMAND
 echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@commnad outside @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-echo "$COMMAND"
+echo "$PUBLISH_COMMAND"
 echo "
 MB_PYTHON_TAG = $MB_PYTHON_TAG
 DOCKER_IMAGE = $DOCKER_IMAGE
 VERSION = $VERSION
 NAME = $NAME
+PUBLISH_COMMAND = $PUBLISH_COMMAND
 "
 
 if [ "$_INSIDE_DOCKER" != "YES" ]; then
@@ -67,11 +70,11 @@ if [ "$_INSIDE_DOCKER" != "YES" ]; then
         -v $PWD:/io \
         -e _INSIDE_DOCKER="YES" \
         -e NAME="$NAME" \
-        -e COMMAND="$cmd" \
+        -e PUBLISH_COMMAND="$PUBLISH_COMMAND" \
         -e VERSION="$VERSION" \
         -e MB_PYTHON_TAG="$MB_PYTHON_TAG" \
         -e WHEEL_NAME_HACK="$WHEEL_NAME_HACK" \
-        $DOCKER_IMAGE bash -c 'cd /io && ./run_manylinux_build.sh'
+        $DOCKER_IMAGE bash -c 'cd /io && ./run_manylinux_build.sh $arch $cmd'
 
     __interactive__='''
     docker run --rm \
@@ -134,7 +137,7 @@ if [ `uname -m` == "aarch64" ]; then
     python -m pip install $BDIST_WHEEL_PATH[all]
         #test wheel
     python run_tests.py
-    if [ "$COMMAND" == "publish" ]; then
+    if [ "PUBLISH_COMMAND" == "publish" ]; then
         ls -al
         uname -m
         GPG_EXECUTABLE=gpg

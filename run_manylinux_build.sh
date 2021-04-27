@@ -40,10 +40,8 @@ echo "arch: $1"
 echo "command: $2"
 #DOCKER_IMAGE=${DOCKER_IMAGE:="quay.io/erotemic/manylinux-for:x86_64-opencv4.1.0-v2"}
 if [ "$1" == "x86_64" ]; then
-    echo "$1"
     DOCKER_IMAGE=${DOCKER_IMAGE:="quay.io/pypa/manylinux2010_x86_64:latest"}
 else
-    echo "$1"
     DOCKER_IMAGE=${DOCKER_IMAGE:="quay.io/pypa/manylinux2014_aarch64:latest"}
 fi    
 # Valid multibuild python versions are:
@@ -52,11 +50,13 @@ MB_PYTHON_TAG=${MB_PYTHON_TAG:=$(python -c "import setup; print(setup.native_mb_
 NAME=${NAME:=$(python -c "import setup; print(setup.NAME)")}
 VERSION=${VERSION:=$(python -c "import setup; print(setup.VERSION)")}
 REPO_ROOT=${REPO_ROOT:=/io}
+COMMAND = $cmd
 echo "
 MB_PYTHON_TAG = $MB_PYTHON_TAG
 DOCKER_IMAGE = $DOCKER_IMAGE
 VERSION = $VERSION
 NAME = $NAME
+COMMAND = $cmd
 "
 
 if [ "$_INSIDE_DOCKER" != "YES" ]; then
@@ -66,7 +66,7 @@ if [ "$_INSIDE_DOCKER" != "YES" ]; then
         -v $PWD:/io \
         -e _INSIDE_DOCKER="YES" \
         -e NAME="$NAME" \
-        -e cmd="$2" \
+        -e COMMAND="$COMMAND" \
         -e VERSION="$VERSION" \
         -e MB_PYTHON_TAG="$MB_PYTHON_TAG" \
         -e WHEEL_NAME_HACK="$WHEEL_NAME_HACK" \
@@ -77,7 +77,6 @@ if [ "$_INSIDE_DOCKER" != "YES" ]; then
         -v $PWD:/io \
         -e _INSIDE_DOCKER="YES" \
         -e NAME="$NAME" \
-        -e cmd="$2" \
         -e VERSION="$VERSION" \
         -e MB_PYTHON_TAG="$MB_PYTHON_TAG" \
         -e WHEEL_NAME_HACK="$WHEEL_NAME_HACK" \
@@ -128,7 +127,7 @@ if [ `uname -m` == "aarch64" ]; then
     python -m pip install $BDIST_WHEEL_PATH[all]
         #test wheel
     python run_tests.py
-    if [ "$cmd" == "publish" ]; then
+    if [ "$COMMAND" == "publish" ]; then
         ls -al
         uname -m
         GPG_EXECUTABLE=gpg

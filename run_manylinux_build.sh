@@ -76,6 +76,7 @@ if [ "$_INSIDE_DOCKER" != "YES" ]; then
         -v $PWD:/io \
         -e _INSIDE_DOCKER="YES" \
         -e NAME="$NAME" \
+        -e cmd="$2" \
         -e VERSION="$VERSION" \
         -e MB_PYTHON_TAG="$MB_PYTHON_TAG" \
         -e WHEEL_NAME_HACK="$WHEEL_NAME_HACK" \
@@ -126,7 +127,7 @@ if [ `uname -m` == "aarch64" ]; then
     python -m pip install $BDIST_WHEEL_PATH[all]
         #test wheel
     python run_tests.py
-    if [ $cmd == "publish" ]; then
+    if [ "$cmd" == "publish" ]; then
         ls -al
         uname -m
         GPG_EXECUTABLE=gpg
